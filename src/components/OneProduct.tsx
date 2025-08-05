@@ -2,7 +2,7 @@ import React from 'react'
 
 const OneProduct = () => {
   return (
-    <div className='card'>
+    <div className='card' style={{margin: 10, borderStyle: 'solid'}}>
         <img className='card-img-top' src='https://picsum.photos/200' alt='Product image'/>
         <div className='card-body'>
             <h3 className='card-tittle'>Product name</h3>
