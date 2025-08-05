@@ -15,10 +15,14 @@ interface ProductsProps {
 const products : React.FC<ProductsProps> = ({productsProps}) => {
   return (
     <div className='all-products'>
-        <OneProduct productProps={productsProps[0]}/>
+        {/* <OneProduct productProps={productsProps[0]}/>
         <OneProduct productProps={productsProps[1]}/>
         <OneProduct productProps={productsProps[2]}/>
-        <OneProduct productProps={productsProps[3]}/>
+        <OneProduct productProps={productsProps[3]}/> */}
+        {/* map */}
+        {productsProps.map((productMap) => (
+            <OneProduct productProps={productMap}/>
+        ))}
     </div>
   )
 }
