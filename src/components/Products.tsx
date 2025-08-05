@@ -8,11 +8,12 @@ const product1 = new Product(1, 'Proizvod 1', 'Opis proizvoda 1', 0);
 interface ProductsProps {
 
     productsProps : Product[];
-
+    onAdd : (id: number) => void;
+    onRemove : (id: number) => void;
 
 }
 
-const products : React.FC<ProductsProps> = ({productsProps}) => {
+const products : React.FC<ProductsProps> = ({productsProps, onAdd, onRemove}) => {
   return (
     <div className='all-products'>
         {/* <OneProduct productProps={productsProps[0]}/>
@@ -21,7 +22,7 @@ const products : React.FC<ProductsProps> = ({productsProps}) => {
         <OneProduct productProps={productsProps[3]}/> */}
         {/* map */}
         {productsProps.map((productMap) => (
-            <OneProduct productProps={productMap}/>
+            <OneProduct key={productMap.id} productProps={productMap} onAdd={() => onAdd(productMap.id)} onRemove={() => onRemove(productMap.id)}/>
         ))}
     </div>
   )
