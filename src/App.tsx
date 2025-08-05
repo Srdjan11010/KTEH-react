@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import Products from './components/products';
@@ -13,31 +14,35 @@ const products: Product[] = [
 
 ];
 
-const addToCart = (id:number) => {
-  console.log(`Dodat proizvod ${id} u korpu`);
-  products.map(product => {
-    if(product.id==id){
-      product.amount++;
-      console.log(`Trenutna kolicina proizvoda ${id} je ${product.amount}`);
-    }
 
-});
-}
-
-const removeFromCart = (id:number) => {
-  console.log(`Oduzet proizvod ${id} iz korpe`);
-  products.map(product => {
-    if(product.id==id){
-      product.amount--;
-      console.log(`Trenutna kolicina proizvoda ${id} je ${product.amount}`);
-    }
-  });
-}
 
 function App() {
+    const addToCart = (id:number) => {
+    console.log(`Dodat proizvod ${id} u korpu`);
+    products.map(product => {
+      if(product.id==id){
+        product.amount++;
+        setCartNum(cartNum + 1);
+        console.log(`Trenutna kolicina proizvoda ${id} je ${product.amount}`);
+      }
+
+  });
+  }
+
+  const removeFromCart = (id:number) => {
+    console.log(`Oduzet proizvod ${id} iz korpe`);
+    products.map(product => {
+      if(product.id==id){
+        product.amount--;
+        setCartNum(cartNum - 1);
+        console.log(`Trenutna kolicina proizvoda ${id} je ${product.amount}`);
+      }
+    });
+  }
+  const [cartNum, setCartNum] = useState(0);
   return (
     <div className="App">
-     <NavBar/>
+     <NavBar cartNum={cartNum}/>
      <Products productsProps = {products} onAdd = {addToCart} onRemove = {removeFromCart}/>
     </div>
   );

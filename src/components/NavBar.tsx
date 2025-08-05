@@ -1,10 +1,14 @@
 import React from 'react'
 
-function NavBar() {
+interface navBarProps {
+  cartNum: number;
+}
+
+function NavBar({cartNum}: navBarProps) {
   return (
     <div className='navBar'>
         <a href="">My Store</a>
-        <p className="cart-num">0</p>
+        <p className="cart-num">{cartNum}</p>
     </div>
   )
 }
