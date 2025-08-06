@@ -2,7 +2,9 @@ import { useState } from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import Products from './components/products';
+import Cart from './components/Cart';
 import { Product } from './models/product'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
 const products: Product[] = [
@@ -17,16 +19,28 @@ const products: Product[] = [
 
 
 function App() {
-    const addToCart = (id:number) => {
+
+  const [cartNum, setCartNum] = useState(0);
+  const [cartProducts, setCartProducts] = useState<Product[]>([]);
+
+  function refreshCart(){
+    products.forEach(element => {
+      if(element.amount > 0){
+        setCartProducts([...cartProducts, element]);
+      }
+    })
+  }
+
+  const addToCart = (id:number) => {
     console.log(`Dodat proizvod ${id} u korpu`);
     products.map(product => {
       if(product.id==id){
         product.amount++;
         setCartNum(cartNum + 1);
         console.log(`Trenutna kolicina proizvoda ${id} je ${product.amount}`);
+        refreshCart();
       }
-
-  });
+    });
   }
 
   const removeFromCart = (id:number) => {
@@ -36,15 +50,21 @@ function App() {
         product.amount--;
         setCartNum(cartNum - 1);
         console.log(`Trenutna kolicina proizvoda ${id} je ${product.amount}`);
+        refreshCart();
       }
     });
   }
-  const [cartNum, setCartNum] = useState(0);
   return (
-    <div className="App">
-     <NavBar cartNum={cartNum}/>
-     <Products productsProps = {products} onAdd = {addToCart} onRemove = {removeFromCart}/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<NavBar cartNum={cartNum}/>}>
+          <Route path='/' element={ <Products productsProps = {products} onAdd = {addToCart} onRemove = {removeFromCart}/>}/>
+          <Route path='/cart' element={<Cart productsProps = {cartProducts} onAdd = {addToCart} onRemove = {removeFromCart}/>}/>
+        </Route>
+
+        <Route path='*' element={<h1>404 Page not found.</h1>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
